@@ -39,8 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController textController = TextEditingController();
 
   Future<void> _saveToGallery(String imagePath) async {
-    final bool result = await GallerySaver.saveImage(imagePath);
-    if (result) {
+   
       print('Imagen guardada en la galería.');
     } else {
       print('Error al guardar la imagen en la galería.');
