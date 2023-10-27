@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'package:gallery_saver/gallery_saver.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:gallery_saver/gallery_saver.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
         colorScheme: ColorScheme.dark(),
+
       ),
       home: const MyHomePage(title: 'CamaraEvaluado/Brandon'),
       debugShowCheckedModeBanner: false,
@@ -37,14 +37,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<String> paths = [];
   TextEditingController textController = TextEditingController();
-
-  Future<void> _saveToGallery(String imagePath) async {
-   
-      print('Imagen guardada en la galería.');
-    } else {
-      print('Error al guardar la imagen en la galería.');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         paths.add(image.path);
                       });
-
-                      _saveToGallery(image.path); // Guardar la imagen en la galería
                     }
                   },
                   child: const Text('Elegir Foto de galería'),
@@ -111,11 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         paths.add(image.path);
                       });
-
-                      _saveToGallery(image.path); // Guardar la imagen en la galería
                     }
                   },
-                  child: const Text('Tomar foto y guardar en la galería'),
+                  child: const Text('Tomar foto'),
                 ),
               ],
             ),
@@ -125,3 +113,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
