@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.deepOrange,
         colorScheme: ColorScheme.dark(),
-
       ),
       home: const MyHomePage(title: 'CamaraEvaluado/Brandon'),
       debugShowCheckedModeBanner: false,
@@ -59,13 +59,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     elevation: 5,
                     child: ListTile(
                       title: Image(image: FileImage(File(path))),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            paths.remove(path);
-                          });
-                        },
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              setState(() {
+                                paths.remove(path);
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.save),
+                            onPressed: () {
+                              _saveImageToGallery(path);
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -111,5 +122,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
 
+  Future<void> _saveImageToGallery(String imagePath) async {
+    final bool isSaved = await ImageGallerySaver.saveFile(imagePath);
+    if (isSaved) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Imagen guardada en la galería'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('No se pudo guardar la imagen en la galería'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+}
